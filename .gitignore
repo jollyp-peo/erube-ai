@@ -1,0 +1,34 @@
+# environments
+.env/
+.env
+.env.local
+.env.example
+
+# python
+__pycache__/
+*.pyc
+
+# node
+node_modules/
+
+# next
+.next/
+
+# logs
+logs/
+*.log
+
+# docker
+docker-data/
+
+# uploads
+uploads/
+
+# vscode
+.vscode/
+
+# mac
+.DS_Store
+
+#Python venv
+venv
