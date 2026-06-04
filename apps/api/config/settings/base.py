@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.assets.apps.AssetsConfig',
     'apps.characters.apps.CharactersConfig',
     'apps.voices.apps.VoicesConfig',
+    'apps.stories.apps.StoriesConfig',
 ]
 
 MIDDLEWARE = [
