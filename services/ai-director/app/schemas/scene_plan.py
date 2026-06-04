@@ -1,8 +1,8 @@
-from pydantic import BaseModel
-
 from typing import List
 
-from .shot_plan import ShotPlan
+from pydantic import BaseModel
+
+from app.schemas.shot_plan import ShotPlan
 
 
 class ScenePlan(BaseModel):
