@@ -47,6 +47,27 @@ services:
     volumes:
       - redis_data:/data
 
+  ai-director:
+    build:
+      context: ../../services/ai-director
+
+    container_name: erube-ai-director
+
+    ports:
+      - "8001:8001"
+
+    env_file:
+      - ../../services/ai-director/.env
+
+    volumes:
+      - ../../services/ai-director:/app
+
+    command: >
+      uvicorn app.main:app
+      --host 0.0.0.0
+      --port 8001
+      --reload
+
 volumes:
   postgres_data:
   redis_data:
