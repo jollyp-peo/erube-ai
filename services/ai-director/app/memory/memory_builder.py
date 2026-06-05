@@ -26,7 +26,13 @@ class MemoryBuilder:
                     scene_number=scene["scene_number"],
                     location=scene["location"],
                     summary=scene["summary"],
-                    active_characters=[],
+                    active_characters=[
+                        character["name"]
+                        for character in scene.get(
+                           "characters",
+                            [],
+                        )
+                    ]
                 )
             )
 

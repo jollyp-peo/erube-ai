@@ -30,6 +30,9 @@ class StoryPlanner:
                         "scene_id": scene.scene_id,
                         "scene_number": scene.scene_number,
                         "location": scene.location,
+                        "active_characters": (
+                            scene.active_characters
+                        ),
                     }
                     for scene in state.scenes
                 ],

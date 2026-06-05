@@ -82,3 +82,17 @@ class DjangoClient:
             response.raise_for_status()
 
             return response.json()
+    
+    async def get_scene_characters(
+        self,
+        scene_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/scenes/{scene_id}/characters/"
+            )
+
+            response.raise_for_status()
+
+        return response.json()
