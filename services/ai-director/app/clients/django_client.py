@@ -22,6 +22,36 @@ class DjangoClient:
 
             return response.json()
 
+
+    async def get_story_scenes(
+        self,
+        story_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/stories/{story_id}/scenes/"
+            )
+
+            response.raise_for_status()
+
+            return response.json()
+
+
+    async def get_scene_shots(
+        self,
+        scene_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/scenes/{scene_id}/shots/"
+            )
+
+            response.raise_for_status()
+
+            return response.json()
+        
     async def get_characters(
         self,
         story_id: str,
@@ -30,20 +60,6 @@ class DjangoClient:
 
             response = await client.get(
                 f"{self.base_url}/api/v1/stories/{story_id}/characters/"
-            )
-
-            response.raise_for_status()
-
-            return response.json()
-
-    async def get_scenes(
-        self,
-        story_id: str,
-    ):
-        async with httpx.AsyncClient() as client:
-
-            response = await client.get(
-                f"{self.base_url}/api/v1/stories/{story_id}/scenes/"
             )
 
             response.raise_for_status()

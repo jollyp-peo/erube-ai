@@ -24,9 +24,28 @@ class GenerationOrchestrator:
             story_id,
         )
 
-        return {
-            "story": story,
-            "plan": self.story_planner.create_generation_plan(
-                story_id=story["id"],
-            ),
-        }
+        scene_response = await self.client.get_story_scenes(
+            story_id,
+        )
+
+        scenes = scene_response["scenes"]
+
+        total_shots = 0
+
+        for scene in scenes:
+
+            shot_response = await self.client.get_scene_shots(
+                scene["id"],
+            )
+
+            scene["shots"] = shot_response["shots"]
+
+            total_shots += len(
+                shot_response["shots"]
+            )
+
+        return self.story_planner.create_generation_plan(
+            story=story,
+            scenes=scenes,
+            total_shots=total_shots,
+        )

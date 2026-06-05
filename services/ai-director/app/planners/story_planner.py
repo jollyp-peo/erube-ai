@@ -11,12 +11,15 @@ class StoryPlanner:
 
     def create_generation_plan(
         self,
-        story_id: str,
+        story,
+        scenes,
+        total_shots,
     ):
 
-        state = self.memory_manager.get_state()
-
         return {
-            "story_id": story_id,
-            "memory_loaded": len(state.characters),
+            "story_id": story["id"],
+            "title": story["title"],
+            "total_scenes": len(scenes),
+            "total_shots": total_shots,
+            "scenes": scenes,
         }
