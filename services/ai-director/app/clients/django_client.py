@@ -111,3 +111,18 @@ class DjangoClient:
             response.raise_for_status()
 
         return response.json()
+    
+    
+    async def get_character_profile(
+        self,
+        character_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/characters/{character_id}/profile/"
+            )
+
+            response.raise_for_status()
+
+        return response.json()

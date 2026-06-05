@@ -52,6 +52,9 @@ class MemoryBuilder:
                     voice_id=character.get(
                         "voice_id"
                     ),
+                    personality=character.get(
+                        "personality_notes"
+                    ),
                 )
             )
 

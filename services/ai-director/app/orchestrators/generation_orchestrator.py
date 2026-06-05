@@ -61,6 +61,24 @@ class GenerationOrchestrator:
                 character["voice_name"] = (
                     voice["name"]
                 )
+                
+            profile_response = (
+                await self.client.get_character_profile(
+                    character["id"]
+                )
+            )
+
+            profile = profile_response.get(
+                "profile"
+            )
+
+            if profile:
+
+                character[
+                    "personality_notes"
+                ] = profile.get(
+                    "personality_notes"
+                )
 
         voice_response = (
             await self.client.get_project_voices(
