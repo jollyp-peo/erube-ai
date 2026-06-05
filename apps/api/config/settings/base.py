@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.voices.apps.VoicesConfig',
     'apps.stories.apps.StoriesConfig',
     'apps.integration.apps.IntegrationConfig',
+    'apps.wardrobes.apps.WardrobesConfig'
 ]
 
 MIDDLEWARE = [
