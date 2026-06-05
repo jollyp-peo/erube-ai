@@ -22,20 +22,35 @@ def internal_character_profile(
         )
 
     return JsonResponse(
-        {
-            "profile": {
-                "personality_notes": (
-                    profile.personality_notes
-                ),
-                "age_range": (
-                    profile.age_range
-                ),
-                "gender": (
-                    profile.gender
-                ),
-                "nationality": (
-                    profile.nationality
-                ),
-            }
+    {
+        "profile": {
+            "personality_notes": (
+                profile.personality_notes
+            ),
+            "age_range": (
+                profile.age_range
+            ),
+            "gender": (
+                profile.gender
+            ),
+            "height": (
+                profile.height
+            ),
+            "body_type": (
+                profile.body_type
+            ),
+            "skin_tone": (
+                profile.skin_tone
+            ),
+            "eye_color": (
+                profile.eye_color
+            ),
+            "hair_color": (
+                profile.hair_color
+            ),
+            "nationality": (
+                profile.nationality
+            ),
         }
-    )
+    }
+)
