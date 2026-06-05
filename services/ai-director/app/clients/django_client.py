@@ -52,14 +52,31 @@ class DjangoClient:
 
             return response.json()
         
-    async def get_characters(
+        
+        
+    async def get_project_characters(
         self,
-        story_id: str,
+        project_id: str,
     ):
         async with httpx.AsyncClient() as client:
 
             response = await client.get(
-                f"{self.base_url}/api/v1/stories/{story_id}/characters/"
+                f"{self.base_url}/internal/projects/{project_id}/characters/"
+            )
+
+            response.raise_for_status()
+
+            return response.json()
+
+
+    async def get_project_voices(
+        self,
+        project_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/projects/{project_id}/voices/"
             )
 
             response.raise_for_status()

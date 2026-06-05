@@ -14,11 +14,12 @@ def internal_story_detail(
     )
 
     return JsonResponse(
-        {
-            "id": str(story.id),
-            "title": story.title,
-            "description": story.description,
-            "genre": story.genre,
-            "status": story.status,
-        }
-    )
+    {
+        "id": str(story.id),
+        "project_id": str(story.project_id),
+        "title": story.title,
+        "description": story.description,
+        "genre": story.genre,
+        "status": story.status,
+    }
+)
