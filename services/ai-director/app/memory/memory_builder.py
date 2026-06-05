@@ -4,7 +4,9 @@ from app.memory.scene_memory import SceneMemory
 from app.memory.location_memory import LocationMemory
 from app.memory.character_memory import CharacterMemory
 from app.memory.voice_memory import VoiceMemory
-
+from app.memory.wardrobe_memory import (
+    WardrobeMemory,
+)
 
 class MemoryBuilder:
 
@@ -40,6 +42,27 @@ class MemoryBuilder:
                 LocationMemory(
                     name=scene["location"],
                     time_of_day=scene["time_of_day"],
+                )
+            )
+            
+        for scene in scenes:
+
+            for wardrobe in scene.get(
+               "wardrobes",
+               [],
+            ):
+
+                state.wardrobes.append(
+                    WardrobeMemory(
+                    character_id=wardrobe[
+                        "character_id"
+                    ],
+                    wardrobe_id=wardrobe[
+                        "wardrobe_id"
+                    ],
+                    outfit_name=wardrobe[
+                        "wardrobe_name"
+                    ],
                 )
             )
 

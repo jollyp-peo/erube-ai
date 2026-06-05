@@ -118,6 +118,16 @@ class GenerationOrchestrator:
             scene["characters"] = (
                 character_response["characters"]
             )
+            
+            wardrobe_response = (
+                await self.client.get_scene_wardrobes(
+                    scene["id"],
+                )
+            )
+
+            scene["wardrobes"] = (
+                wardrobe_response["wardrobes"]
+            )
 
             total_shots += len(
                 shot_response["shots"]

@@ -13,6 +13,7 @@ from .voice_views import (
 from .scene_character_views import internal_scene_characters
 from .character_voice_views import internal_character_voice
 from .character_profile_views import internal_character_profile
+from .wardrobe_views import internal_scene_wardrobes
 
 urlpatterns = [
     path(
@@ -59,5 +60,10 @@ urlpatterns = [
     "internal/characters/<uuid:character_id>/profile/",
     internal_character_profile,
     name="internal-character-profile",
+   ),
+    path(
+    "internal/scenes/<uuid:scene_id>/wardrobes/",
+    internal_scene_wardrobes,
+    name="internal-scene-wardrobes",
 ),
 ]

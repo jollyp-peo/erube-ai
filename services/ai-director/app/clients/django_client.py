@@ -126,3 +126,17 @@ class DjangoClient:
             response.raise_for_status()
 
         return response.json()
+    
+    async def get_scene_wardrobes(
+        self,
+        scene_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/scenes/{scene_id}/wardrobes/"
+        )
+
+        response.raise_for_status()
+
+        return response.json()

@@ -62,6 +62,14 @@ class StoryPlanner:
                     }
                     for voice in state.voices
                 ],
+                "wardrobes": [
+                    {
+                        "character_id": wardrobe.character_id,
+                        "wardrobe_id": wardrobe.wardrobe_id,
+                        "outfit_name": wardrobe.outfit_name,
+                    }
+                    for wardrobe in state.wardrobes
+                ],
             },
             "scenes": scenes,
         }
