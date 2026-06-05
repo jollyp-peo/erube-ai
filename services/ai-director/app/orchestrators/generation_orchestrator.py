@@ -79,6 +79,9 @@ class GenerationOrchestrator:
                 ] = profile.get(
                     "personality_notes"
                 )
+                character.update(
+                    profile
+                )
 
         voice_response = (
             await self.client.get_project_voices(

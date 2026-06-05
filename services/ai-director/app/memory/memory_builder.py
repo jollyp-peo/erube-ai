@@ -48,12 +48,36 @@ class MemoryBuilder:
             state.characters.append(
                 CharacterMemory(
                     character_id=character["id"],
-                    name=character["name"],
-                    voice_id=character.get(
-                        "voice_id"
-                    ),
+                        name=character["name"],
+                        voice_id=character.get(
+                            "voice_id"
+                        ),
                     personality=character.get(
                         "personality_notes"
+                    ),
+                    age_range=character.get(
+                        "age_range"
+                    ),
+                    gender=character.get(
+                        "gender"
+                    ),
+                    height=character.get(
+                    "height"
+                    ),
+                    body_type=character.get(
+                        "body_type"
+                    ),
+                    skin_tone=character.get(
+                        "skin_tone"
+                    ),
+                    eye_color=character.get(
+                        "eye_color"
+                    ),
+                    hair_color=character.get(
+                        "hair_color"
+                    ),
+                    nationality=character.get(
+                        "nationality"
                     ),
                 )
             )

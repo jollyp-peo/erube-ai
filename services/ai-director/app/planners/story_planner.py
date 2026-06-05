@@ -49,6 +49,9 @@ class StoryPlanner:
                         "name": character.name,
                         "voice_id": character.voice_id,
                         "personality": character.personality,
+                        "gender": character.gender,
+                        "hair_color": character.hair_color,
+                        "eye_color": character.eye_color,
                     }
                     for character in state.characters
                 ],
