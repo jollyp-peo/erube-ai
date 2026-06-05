@@ -15,7 +15,7 @@ class DjangoClient:
         async with httpx.AsyncClient() as client:
 
             response = await client.get(
-                f"{self.base_url}/api/v1/stories/{story_id}/"
+                f"{self.base_url}/internal/stories/{story_id}/"
             )
 
             response.raise_for_status()

@@ -19,7 +19,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "django",
+    "erube-django",
+]
 
 
 # Application definition
@@ -39,6 +45,7 @@ INSTALLED_APPS = [
     'apps.characters.apps.CharactersConfig',
     'apps.voices.apps.VoicesConfig',
     'apps.stories.apps.StoriesConfig',
+    'apps.integration.apps.IntegrationConfig',
 ]
 
 MIDDLEWARE = [
