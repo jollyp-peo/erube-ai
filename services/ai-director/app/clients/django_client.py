@@ -96,3 +96,18 @@ class DjangoClient:
             response.raise_for_status()
 
         return response.json()
+    
+    
+    async def get_character_voice(
+        self,
+        character_id: str,
+    ):
+        async with httpx.AsyncClient() as client:
+
+            response = await client.get(
+                f"{self.base_url}/internal/characters/{character_id}/voice/"
+            )
+
+            response.raise_for_status()
+
+        return response.json()

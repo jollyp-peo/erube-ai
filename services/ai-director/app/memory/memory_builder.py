@@ -49,6 +49,9 @@ class MemoryBuilder:
                 CharacterMemory(
                     character_id=character["id"],
                     name=character["name"],
+                    voice_id=character.get(
+                        "voice_id"
+                    ),
                 )
             )
 

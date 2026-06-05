@@ -39,6 +39,28 @@ class GenerationOrchestrator:
         characters = character_response[
             "characters"
         ]
+        
+        for character in characters:
+
+            voice_assignment = (
+                await self.client.get_character_voice(
+                    character["id"]
+                )
+            )
+
+            voice = voice_assignment.get(
+                "voice"
+            )
+
+            if voice:
+
+                character["voice_id"] = (
+                    voice["voice_id"]
+                )
+
+                character["voice_name"] = (
+                    voice["name"]
+                )
 
         voice_response = (
             await self.client.get_project_voices(
