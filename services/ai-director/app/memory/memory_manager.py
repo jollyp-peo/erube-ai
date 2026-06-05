@@ -7,13 +7,12 @@ class MemoryManager:
 
         self.state = MemoryState()
 
-    def get_state(self) -> MemoryState:
+    def get_state(self):
 
         return self.state
 
-    def update_state(
+    def load_state(
         self,
-        state: MemoryState,
-    ) -> None:
-
+        state,
+    ):
         self.state = state

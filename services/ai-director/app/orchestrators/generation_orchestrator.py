@@ -1,6 +1,8 @@
 from app.clients.django_client import DjangoClient
 from app.memory.memory_manager import MemoryManager
 from app.planners.story_planner import StoryPlanner
+from app.memory.memory_builder import MemoryBuilder
+from app.schemas.memory_state import MemoryState
 
 
 class GenerationOrchestrator:
@@ -14,11 +16,14 @@ class GenerationOrchestrator:
         self.story_planner = StoryPlanner(
             memory_manager=self.memory_manager,
         )
+        
+        self.memory_builder = MemoryBuilder()
 
     async def create_plan(
         self,
         story_id: str,
     ):
+        
 
         story = await self.client.get_story(
             story_id,
@@ -43,7 +48,16 @@ class GenerationOrchestrator:
             total_shots += len(
                 shot_response["shots"]
             )
-
+        
+        memory_state: MemoryState = self.memory_builder.build(
+            story=story,
+            scenes=scenes,
+        )
+        
+        self.memory_manager.load_state(
+            memory_state
+        )   
+    
         return self.story_planner.create_generation_plan(
             story=story,
             scenes=scenes,
