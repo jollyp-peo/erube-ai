@@ -14,6 +14,7 @@ class StoryPlanner:
         story,
         scenes,
         total_shots,
+        continuity_report,
     ):
 
         state = self.memory_manager.get_state()
@@ -24,6 +25,7 @@ class StoryPlanner:
             "genre": story["genre"],
             "total_scenes": len(scenes),
             "total_shots": total_shots,
+            "continuity": continuity_report,
             "memory": {
                 "scenes": [
                     {
@@ -70,6 +72,7 @@ class StoryPlanner:
                     }
                     for wardrobe in state.wardrobes
                 ],
+                
             },
             "scenes": scenes,
         }

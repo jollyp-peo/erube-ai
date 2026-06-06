@@ -3,6 +3,9 @@ from app.memory.memory_manager import MemoryManager
 from app.planners.story_planner import StoryPlanner
 from app.memory.memory_builder import MemoryBuilder
 from app.schemas.memory_state import MemoryState
+from app.validators.continuity_validator import (
+    ContinuityValidator,
+)
 
 
 class GenerationOrchestrator:
@@ -18,6 +21,9 @@ class GenerationOrchestrator:
         )
 
         self.memory_builder = MemoryBuilder()
+        self.continuity_validator = (
+            ContinuityValidator()
+        )
 
     async def create_plan(
         self,
@@ -143,9 +149,16 @@ class GenerationOrchestrator:
         self.memory_manager.load_state(
             memory_state
         )
+        
+        continuity_report = (
+            self.continuity_validator.validate(
+                memory_state
+            )
+        )
 
         return self.story_planner.create_generation_plan(
             story=story,
             scenes=scenes,
             total_shots=total_shots,
+            continuity_report=continuity_report,
         )
