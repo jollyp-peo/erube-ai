@@ -7,6 +7,13 @@ from app.schemas.scene_goal import (
 from app.providers.response_parser import (
     ResponseParser,
 )
+from app.providers.retry_handler import (
+    RetryHandler,
+)
+
+from app.providers.ai_json_validator import (
+    AIJSONValidator,
+)
 
 
 class AISceneDirector:
@@ -40,8 +47,10 @@ class AISceneDirector:
         """
 
         response = (
-            await self.provider.generate(
-                prompt
+            await RetryHandler.execute(
+                lambda: self.provider.generate(
+                    prompt
+                )
             )
         )
 
@@ -53,7 +62,12 @@ class AISceneDirector:
         data = json.loads(
             content
         )
-
+        
+        
+        AIJSONValidator.validate_scene_goal(
+            data
+        )
+        
         return SceneGoal(
             objective=data[
                 "objective"

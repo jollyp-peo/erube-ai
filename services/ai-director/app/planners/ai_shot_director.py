@@ -8,6 +8,14 @@ from app.providers.response_parser import (
     ResponseParser,
 )
 
+from app.providers.retry_handler import (
+    RetryHandler,
+)
+
+from app.providers.ai_json_validator import (
+    AIJSONValidator,
+)
+
 
 class AIShotDirector:
 
@@ -42,8 +50,8 @@ class AIShotDirector:
         }}
         """
 
-        response = (
-            await self.provider.generate(
+        response = await RetryHandler.execute(
+            lambda: self.provider.generate(
                 prompt
             )
         )
@@ -57,7 +65,12 @@ class AIShotDirector:
         data = json.loads(
             content
         )
-
+        
+        AIJSONValidator.validate_shot_goal(
+            data
+        )
+        
+        
         return ShotGoal(
             purpose=data[
                 "purpose"
