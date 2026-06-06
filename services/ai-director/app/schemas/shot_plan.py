@@ -2,6 +2,9 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 from app.schemas.shot_goal import ShotGoal
+from app.schemas.prompt_package import (
+    PromptPackage,
+)
 
 
 class CharacterContext(BaseModel):
@@ -50,10 +53,11 @@ class ShotPlan(BaseModel):
 
     goal: Optional[ShotGoal] = None
 
-    prompt: str
-
-    negative_prompt: Optional[str] = None
-
+    prompt_package: Optional[
+        PromptPackage
+    ] = None
+    
+    
     characters: List[CharacterContext] = Field(
         default_factory=list
     )

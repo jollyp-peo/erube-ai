@@ -18,6 +18,10 @@ from app.planners.cinematic_prompt_builder import (
     CinematicPromptBuilder,
 )
 
+from app.planners.prompt_package_builder import (
+    PromptPackageBuilder
+)
+
 
 class StoryPlanner:
 
@@ -45,6 +49,10 @@ class StoryPlanner:
         
         self.prompt_builder = (
             CinematicPromptBuilder()
+        )
+        
+        self.prompt_package_builder = (
+            PromptPackageBuilder()
         )
 
 
@@ -102,9 +110,16 @@ class StoryPlanner:
                     )
                 )
                 
-                shot_plan.prompt = (
+                prompt = (
                     self.prompt_builder.build(
                         shot_plan
+                    )
+                )
+
+                shot_plan.prompt_package = (
+                    self.prompt_package_builder.build(
+                        shot_plan,
+                        prompt,
                     )
                 )
                 
@@ -120,17 +135,17 @@ class StoryPlanner:
                     shot_plan
                 )
 
-                scene_plan = (
-                    self.plan_builder.build_scene_plan(
-                        scene=scene,
-                        goal=scene_goal,
-                        shot_plans=shot_plans,
-                    )
+            scene_plan = (
+                self.plan_builder.build_scene_plan(
+                    scene=scene,
+                    goal=scene_goal,
+                    shot_plans=shot_plans,
                 )
-            
-                scene_plans.append(
-                    scene_plan
-                )
+            )
+        
+            scene_plans.append(
+                scene_plan
+            )
                 
                 
         return {
