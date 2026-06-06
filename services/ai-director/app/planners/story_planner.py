@@ -1,10 +1,11 @@
 from app.memory.memory_manager import MemoryManager
-from app.planners.scene_director import (
-    SceneDirector,
-)
-from app.planners.shot_director import (
-    ShotDirector,
-)
+# from app.planners.scene_director import (
+#     SceneDirector,
+# )
+# from app.planners.shot_director import (
+#     ShotDirector,
+# )
+
 
 from app.planners.plan_builder import (
     PlanBuilder,
@@ -21,6 +22,18 @@ from app.planners.cinematic_prompt_builder import (
 from app.planners.prompt_package_builder import (
     PromptPackageBuilder
 )
+# Real data openrouter
+from app.planners.ai_scene_director import (
+    AISceneDirector,
+)
+
+from app.planners.ai_shot_director import (
+    AIShotDirector,
+)
+
+from app.providers.provider_factory import (
+    ProviderFactory,
+)
 
 
 class StoryPlanner:
@@ -31,12 +44,21 @@ class StoryPlanner:
         
     ):
         self.memory_manager = memory_manager
+        
+        provider = (
+           ProviderFactory.create()
+        )
+
         self.scene_director = (
-            SceneDirector()
+            AISceneDirector(
+                provider
+            )
         )
         
         self.shot_director = (
-           ShotDirector()
+            AIShotDirector(
+                provider
+            )
         )
         
         self.plan_builder = (
@@ -56,7 +78,7 @@ class StoryPlanner:
         )
 
 
-    def create_generation_plan(
+    async def create_generation_plan(
         self,
         story,
         scenes,
@@ -71,8 +93,9 @@ class StoryPlanner:
         for scene in scenes:
 
             scene_goal = (
-                self.scene_director.build_goal(
-                    scene
+                await self.scene_director.build_goal(
+                    story,
+                    scene,
                 )
             )
 
@@ -81,8 +104,9 @@ class StoryPlanner:
             for shot in scene["shots"]:
         
                 shot_goal = (
-                    self.shot_director.build_goal(
-                        shot
+                    await self.shot_director.build_goal(
+                        scene,
+                        shot,
                     )
                 )
         

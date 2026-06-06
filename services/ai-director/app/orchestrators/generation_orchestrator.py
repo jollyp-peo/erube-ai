@@ -156,7 +156,7 @@ class GenerationOrchestrator:
             )
         )
 
-        return self.story_planner.create_generation_plan(
+        return await self.story_planner.create_generation_plan(
             story=story,
             scenes=scenes,
             total_shots=total_shots,
