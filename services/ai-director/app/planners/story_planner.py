@@ -10,6 +10,10 @@ from app.planners.plan_builder import (
     PlanBuilder,
 )
 
+from app.planners.context_builder import (
+    ContextBuilder,
+)
+
 
 class StoryPlanner:
 
@@ -29,6 +33,10 @@ class StoryPlanner:
         
         self.plan_builder = (
             PlanBuilder()
+        )
+        
+        self.context_builder = (
+           ContextBuilder()
         )
 
     def create_generation_plan(
@@ -70,6 +78,28 @@ class StoryPlanner:
                         goal=shot_goal,
                     )
                 )
+                shot_plan.characters = (
+                    self.context_builder
+                        .build_character_contexts(
+                            scene,
+                            state,
+                        )
+                    )
+
+                shot_plan.location = (
+                    self.context_builder
+                    .build_location_context(
+                        scene
+                    )
+                )
+                
+                shot_plan.voice = (
+                    self.context_builder
+                    .build_voice_context(
+                        scene,
+                        state,
+                    )
+)
         
                 shot_plans.append(
                     shot_plan
