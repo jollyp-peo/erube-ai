@@ -1,11 +1,4 @@
 from app.memory.memory_manager import MemoryManager
-# from app.planners.scene_director import (
-#     SceneDirector,
-# )
-# from app.planners.shot_director import (
-#     ShotDirector,
-# )
-
 
 from app.planners.plan_builder import (
     PlanBuilder,
@@ -33,6 +26,14 @@ from app.planners.ai_shot_director import (
 
 from app.providers.provider_factory import (
     ProviderFactory,
+)
+
+from app.planners.storyboard_director import (
+    StoryboardDirector,
+)
+
+from app.planners.storyboard_prompt_builder import (
+    StoryboardPromptBuilder,
 )
 
 
@@ -75,6 +76,14 @@ class StoryPlanner:
         
         self.prompt_package_builder = (
             PromptPackageBuilder()
+        )
+        
+        self.storyboard_prompt_builder = (
+            StoryboardPromptBuilder()
+        )
+    
+        self.storyboard_director = (
+            StoryboardDirector()
         )
 
 
@@ -154,6 +163,22 @@ class StoryPlanner:
                     )
                 )
                 
+                storyboard_prompt = (
+                    self.storyboard_prompt_builder.build(
+                        shot_plan
+                    )
+                )
+
+                storyboard_plan = (
+                    self.storyboard_director.build(
+                        shot_plan,
+                        storyboard_prompt,
+                    )
+                )
+                shot_plan.storyboard_plan = (
+                    storyboard_plan
+                )
+                
         
                 shot_plans.append(
                     shot_plan
@@ -183,6 +208,7 @@ class StoryPlanner:
                 plan.model_dump()
                 for plan in scene_plans
             ],
+            
             "memory": {
                 "scenes": [
                     {

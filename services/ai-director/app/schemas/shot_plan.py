@@ -6,6 +6,10 @@ from app.schemas.prompt_package import (
     PromptPackage,
 )
 
+from app.schemas.storyboard_plan import (
+    StoryboardPlan,
+)
+
 
 class CharacterContext(BaseModel):
     character_id: str
@@ -52,6 +56,10 @@ class ShotPlan(BaseModel):
     )
 
     goal: Optional[ShotGoal] = None
+    
+    storyboard_plan: (
+        StoryboardPlan | None
+    ) = None
 
     prompt_package: Optional[
         PromptPackage
