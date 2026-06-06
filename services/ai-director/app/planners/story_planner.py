@@ -14,8 +14,8 @@ from app.planners.context_builder import (
     ContextBuilder,
 )
 
-from app.planners.prompt_builder import (
-    PromptBuilder,
+from app.planners.cinematic_prompt_builder import (
+    CinematicPromptBuilder,
 )
 
 
@@ -44,8 +44,9 @@ class StoryPlanner:
         )
         
         self.prompt_builder = (
-            PromptBuilder()
+            CinematicPromptBuilder()
         )
+
 
     def create_generation_plan(
         self,
