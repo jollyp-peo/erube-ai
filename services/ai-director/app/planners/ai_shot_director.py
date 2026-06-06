@@ -1,5 +1,11 @@
+import json
+
 from app.schemas.shot_goal import (
     ShotGoal,
+)
+
+from app.providers.response_parser import (
+    ResponseParser,
 )
 
 
@@ -24,26 +30,42 @@ class AIShotDirector:
         Shot:
         {shot["title"]}
 
-        Generate:
-        purpose,
-        framing_intent,
-        narrative_intent
+        Description:
+        {shot["description"]}
+
+        Return ONLY valid JSON.
+
+        {{
+            "purpose": "",
+            "framing_intent": "",
+            "narrative_intent": ""
+        }}
         """
 
-        result = (
+        response = (
             await self.provider.generate(
                 prompt
             )
         )
 
+        content = (
+            ResponseParser.extract_content(
+                response
+            )
+        )
+
+        data = json.loads(
+            content
+        )
+
         return ShotGoal(
-            purpose=result[
+            purpose=data[
                 "purpose"
             ],
-            framing_intent=result[
+            framing_intent=data[
                 "framing_intent"
             ],
-            narrative_intent=result[
+            narrative_intent=data[
                 "narrative_intent"
             ],
         )
