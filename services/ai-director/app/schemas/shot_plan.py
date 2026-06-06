@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
+from app.schemas.shot_goal import ShotGoal
 
 
 class CharacterContext(BaseModel):
@@ -47,14 +48,20 @@ class ShotPlan(BaseModel):
         ge=1,
     )
 
+    goal: Optional[ShotGoal] = None
+
     prompt: str
 
     negative_prompt: Optional[str] = None
 
-    characters: List[CharacterContext] = []
+    characters: List[CharacterContext] = Field(
+        default_factory=list
+    )
 
     voice: Optional[VoiceContext] = None
 
     location: Optional[LocationContext] = None
 
-    storyboards: List[StoryboardContext] = []
+    storyboards: List[StoryboardContext] = Field(
+        default_factory=list
+    )

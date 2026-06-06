@@ -3,6 +3,7 @@ from typing import List
 from pydantic import BaseModel
 
 from app.schemas.shot_plan import ShotPlan
+from app.schemas.scene_goal import SceneGoal
 
 
 class ScenePlan(BaseModel):
@@ -20,3 +21,4 @@ class ScenePlan(BaseModel):
     estimated_duration: int
 
     shots: List[ShotPlan]
+    goal: SceneGoal | None = None

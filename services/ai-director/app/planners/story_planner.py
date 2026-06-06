@@ -1,4 +1,10 @@
 from app.memory.memory_manager import MemoryManager
+from app.planners.scene_director import (
+    SceneDirector,
+)
+from app.planners.shot_director import (
+    ShotDirector,
+)
 
 
 class StoryPlanner:
@@ -6,8 +12,16 @@ class StoryPlanner:
     def __init__(
         self,
         memory_manager: MemoryManager,
+        
     ):
         self.memory_manager = memory_manager
+        self.scene_director = (
+            SceneDirector()
+        )
+        
+        self.shot_director = (
+           ShotDirector()
+        )
 
     def create_generation_plan(
         self,
@@ -18,7 +32,52 @@ class StoryPlanner:
     ):
 
         state = self.memory_manager.get_state()
+        
+        scene_goals = []
 
+        for scene in scenes:
+
+            goal = (
+                self.scene_director.build_goal(
+                    scene
+                )
+            )
+
+            scene_goals.append(
+                {
+                    "scene_id": scene["id"],
+                    "scene_number": scene[
+                        "scene_number"
+                    ],
+                    "title": scene["title"],
+                    "goal": goal.model_dump(),
+                }
+            )
+            
+        shot_goals = []
+
+        for scene in scenes:
+        
+            for shot in scene["shots"]:
+        
+                goal = (
+                    self.shot_director.build_goal(
+                        shot
+                    )
+                )
+        
+                shot_goals.append(
+                    {
+                        "scene_id": scene["id"],
+                        "shot_id": shot["id"],
+                        "shot_number": shot[
+                            "shot_number"
+                        ],
+                        "title": shot["title"],
+                        "goal": goal.model_dump(),
+                    }
+                )
+        
         return {
             "story_id": story["id"],
             "title": story["title"],
@@ -26,6 +85,8 @@ class StoryPlanner:
             "total_scenes": len(scenes),
             "total_shots": total_shots,
             "continuity": continuity_report,
+            "scene_goals": scene_goals,
+            "shot_goals": shot_goals,
             "memory": {
                 "scenes": [
                     {
