@@ -6,6 +6,10 @@ from app.planners.shot_director import (
     ShotDirector,
 )
 
+from app.planners.plan_builder import (
+    PlanBuilder,
+)
+
 
 class StoryPlanner:
 
@@ -22,6 +26,10 @@ class StoryPlanner:
         self.shot_director = (
            ShotDirector()
         )
+        
+        self.plan_builder = (
+            PlanBuilder()
+        )
 
     def create_generation_plan(
         self,
@@ -33,51 +41,53 @@ class StoryPlanner:
 
         state = self.memory_manager.get_state()
         
-        scene_goals = []
-
+        scene_plans = []
+        
         for scene in scenes:
 
-            goal = (
+            scene_goal = (
                 self.scene_director.build_goal(
                     scene
                 )
             )
 
-            scene_goals.append(
-                {
-                    "scene_id": scene["id"],
-                    "scene_number": scene[
-                        "scene_number"
-                    ],
-                    "title": scene["title"],
-                    "goal": goal.model_dump(),
-                }
-            )
-            
-        shot_goals = []
-
-        for scene in scenes:
+            shot_plans = []
         
             for shot in scene["shots"]:
         
-                goal = (
+                shot_goal = (
                     self.shot_director.build_goal(
                         shot
                     )
                 )
         
-                shot_goals.append(
-                    {
-                        "scene_id": scene["id"],
-                        "shot_id": shot["id"],
-                        "shot_number": shot[
-                            "shot_number"
+                shot_plan = (
+                    self.plan_builder.build_shot_plan(
+                        shot=shot,
+                        scene_number=scene[
+                            "scene_number"
                         ],
-                        "title": shot["title"],
-                        "goal": goal.model_dump(),
-                    }
+                        goal=shot_goal,
+                    )
                 )
         
+                shot_plans.append(
+                    shot_plan
+                )
+
+                scene_plan = (
+                    self.plan_builder.build_scene_plan(
+                        scene=scene,
+                        goal=scene_goal,
+                        shot_plans=shot_plans,
+                    )
+                )
+            
+                scene_plans.append(
+                    scene_plan
+                )
+                
+                
         return {
             "story_id": story["id"],
             "title": story["title"],
@@ -85,8 +95,10 @@ class StoryPlanner:
             "total_scenes": len(scenes),
             "total_shots": total_shots,
             "continuity": continuity_report,
-            "scene_goals": scene_goals,
-            "shot_goals": shot_goals,
+            "scene_plans": [
+                plan.model_dump()
+                for plan in scene_plans
+            ],
             "memory": {
                 "scenes": [
                     {
