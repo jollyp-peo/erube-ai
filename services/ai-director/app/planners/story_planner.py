@@ -14,6 +14,10 @@ from app.planners.context_builder import (
     ContextBuilder,
 )
 
+from app.planners.prompt_builder import (
+    PromptBuilder,
+)
+
 
 class StoryPlanner:
 
@@ -37,6 +41,10 @@ class StoryPlanner:
         
         self.context_builder = (
            ContextBuilder()
+        )
+        
+        self.prompt_builder = (
+            PromptBuilder()
         )
 
     def create_generation_plan(
@@ -90,6 +98,12 @@ class StoryPlanner:
                     self.context_builder
                     .build_location_context(
                         scene
+                    )
+                )
+                
+                shot_plan.prompt = (
+                    self.prompt_builder.build(
+                        shot_plan
                     )
                 )
                 
