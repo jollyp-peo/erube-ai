@@ -17,9 +17,18 @@ class Settings(BaseSettings):
 
     LOG_LEVEL: str = "INFO"
 
+    AI_PROVIDER: str = "mock"
+
+    OPENROUTER_API_KEY: str = ""
+
+    OPENROUTER_MODEL: str = (
+        "deepseek/deepseek-chat-v3"
+    )
+
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = "ignore"
 
 
 settings = Settings()

@@ -110,6 +110,13 @@ class StoryPlanner:
                     )
                 )
                 
+                shot_plan.voice = (
+                    self.context_builder
+                    .build_voice_context(
+                        scene,
+                        state,
+                    )
+                )
                 prompt = (
                     self.prompt_builder.build(
                         shot_plan
@@ -123,13 +130,6 @@ class StoryPlanner:
                     )
                 )
                 
-                shot_plan.voice = (
-                    self.context_builder
-                    .build_voice_context(
-                        scene,
-                        state,
-                    )
-)
         
                 shot_plans.append(
                     shot_plan
