@@ -36,6 +36,17 @@ from app.planners.storyboard_prompt_builder import (
     StoryboardPromptBuilder,
 )
 
+from app.writers.script_service import (
+    ScriptService,
+)
+
+from app.renderers.storyboard_service import (
+    StoryboardService,
+)
+
+from app.schemas.shot_plan import (
+    StoryboardContext,
+)
 
 class StoryPlanner:
 
@@ -85,7 +96,15 @@ class StoryPlanner:
         self.storyboard_director = (
             StoryboardDirector()
         )
-
+        
+        
+        self.script_service = (
+            ScriptService()
+        )
+        
+        self.storyboard_service = (
+            StoryboardService()
+        )
 
     async def create_generation_plan(
         self,
@@ -107,7 +126,14 @@ class StoryPlanner:
                     scene,
                 )
             )
-
+            
+            scene_script = (
+                await self.script_service.generate(
+                    scene
+                )
+            )
+            
+            
             shot_plans = []
         
             for shot in scene["shots"]:
@@ -179,6 +205,31 @@ class StoryPlanner:
                     storyboard_plan
                 )
                 
+                if shot_plan.storyboard_plan:
+
+                    storyboard_result = (
+                        await self.storyboard_service.generate(
+                            project_id=story[
+                                "project_id"
+                            ],
+                            storyboard_plan=(
+                                shot_plan.storyboard_plan
+                            ),
+                        )
+                    )
+                
+                    shot_plan.storyboards.append(
+                        StoryboardContext(
+                            asset_id=(
+                                storyboard_result[
+                                    "asset"
+                                ][
+                                    "asset_id"
+                                ]
+                            ),
+                            is_primary=True,
+                        )
+                    )
         
                 shot_plans.append(
                     shot_plan
@@ -188,6 +239,7 @@ class StoryPlanner:
                 self.plan_builder.build_scene_plan(
                     scene=scene,
                     goal=scene_goal,
+                    script=scene_script,
                     shot_plans=shot_plans,
                 )
             )

@@ -37,6 +37,7 @@ class PlanBuilder:
         self,
         scene,
         goal,
+        script,
         shot_plans,
     ):
 
@@ -54,5 +55,6 @@ class PlanBuilder:
                 "duration_estimate"
             ],
             goal=goal,
+            script=script,
             shots=shot_plans,
         )

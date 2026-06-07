@@ -41,3 +41,23 @@ class AIJSONValidator:
                 )
 
         return True
+    
+    @staticmethod
+    def validate_scene_script(
+        data,
+    ):
+    
+        required = [
+            "narration",
+            "dialogue",
+        ]
+    
+        for field in required:
+    
+            if field not in data:
+    
+                raise ValueError(
+                    f"Missing field: {field}"
+                )
+    
+        return True
