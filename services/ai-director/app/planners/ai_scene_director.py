@@ -4,15 +4,16 @@ from app.schemas.scene_goal import (
     SceneGoal,
 )
 
-from app.providers.response_parser import (
-    ResponseParser,
-)
 from app.providers.retry_handler import (
     RetryHandler,
 )
 
 from app.providers.ai_json_validator import (
     AIJSONValidator,
+)
+
+from app.providers.ai_response_handler import (
+    AIResponseHandler,
 )
 
 
@@ -54,18 +55,11 @@ class AISceneDirector:
             )
         )
 
-        content = (
-            ResponseParser.extract_content(
-                response
+        data = (
+            AIResponseHandler.parse(
+                response,
+                AIJSONValidator.validate_scene_goal,
             )
-        )
-        data = json.loads(
-            content
-        )
-        
-        
-        AIJSONValidator.validate_scene_goal(
-            data
         )
         
         return SceneGoal(

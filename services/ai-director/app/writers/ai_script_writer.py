@@ -1,8 +1,5 @@
 import json
 
-from app.providers.response_parser import (
-    ResponseParser,
-)
 
 from app.providers.ai_json_validator import (
     AIJSONValidator,
@@ -18,6 +15,10 @@ from app.schemas.script_segment import (
 
 from app.schemas.narration_segment import (
     NarrationSegment,
+)
+
+from app.providers.ai_response_handler import (
+    AIResponseHandler,
 )
 
 class AIScriptWriter:
@@ -120,19 +121,13 @@ class AIScriptWriter:
             )
         )
 
-        content = (
-            ResponseParser.extract_content(
-                response
+        data = (
+            AIResponseHandler.parse(
+                response,
+                AIJSONValidator.validate_scene_script,
             )
         )
-
-        data = json.loads(
-            content
-        )
         
-        AIJSONValidator.validate_scene_script(
-            data
-        )
         
         narration_segments = []
 

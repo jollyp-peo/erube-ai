@@ -4,16 +4,16 @@ from app.schemas.shot_goal import (
     ShotGoal,
 )
 
-from app.providers.response_parser import (
-    ResponseParser,
-)
-
 from app.providers.retry_handler import (
     RetryHandler,
 )
 
 from app.providers.ai_json_validator import (
     AIJSONValidator,
+)
+
+from app.providers.ai_response_handler import (
+    AIResponseHandler,
 )
 
 
@@ -56,20 +56,12 @@ class AIShotDirector:
             )
         )
 
-        content = (
-            ResponseParser.extract_content(
-                response
+        data = (
+            AIResponseHandler.parse(
+                response,
+                AIJSONValidator.validate_shot_goal,
             )
         )
-
-        data = json.loads(
-            content
-        )
-        
-        AIJSONValidator.validate_shot_goal(
-            data
-        )
-        
         
         return ShotGoal(
             purpose=data[
