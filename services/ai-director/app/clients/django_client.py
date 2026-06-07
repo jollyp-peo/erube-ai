@@ -140,3 +140,29 @@ class DjangoClient:
         response.raise_for_status()
 
         return response.json()
+    
+    # Assets storage
+    
+    async def create_asset(
+        self,
+        project_id,
+        name,
+        asset_type,
+        file_url,
+    ):
+
+        async with httpx.AsyncClient() as client:
+    
+            response = await client.post(
+                f"{self.base_url}/internal/assets/",
+                json={
+                    "project_id": project_id,
+                    "name": name,
+                    "asset_type": asset_type,
+                    "file_url": file_url,
+                },
+            )
+    
+            response.raise_for_status()
+    
+            return response.json()
