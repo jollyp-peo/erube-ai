@@ -24,6 +24,14 @@ class Settings(BaseSettings):
     OPENROUTER_MODEL: str = (
         "deepseek/deepseek-chat-v3"
     )
+    
+    IMAGE_PROVIDER: str = "mock"
+
+    FAL_API_KEY: str = ""
+    
+    IMAGE_MODEL: str = (
+        "fal-ai/flux/schnell"
+    )
 
     class Config:
         env_file = ".env"
